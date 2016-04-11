@@ -1,4 +1,4 @@
-# Markwown Live Editor
+# Markdown Live Editor
 
 ### Overview
 
@@ -18,9 +18,9 @@ Windows 上的 MarkdownPad 的确很好用，但是不支持语法高亮、动�
 
 ### Dependency/Reference
 
-- MathJax: [MathJax][mathjax]
+- MathJax: [`MathJax`][mathjax]
 - Javascript Markdown Parser: [`markdown-js`][markdown.js]
-- Github Markdown CSS: [github-markdown-css][github-markdown]
+- Github Markdown CSS: [`github-markdown-css`][github-markdown]
 
 ### Todo
 
