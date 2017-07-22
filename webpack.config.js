@@ -16,20 +16,11 @@ module.exports = {
       use: ['style-loader', 'css-loader', 'less-loader']
     }, {
       test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
-      exclude: /highlight/
+      use: ['style-loader', 'css-loader']
     }, {
       test: /\.js$/,
       use: ['babel-loader'],
-      exclude: /node_module|highlight/
-    }, {
-      test: /highlight/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
-        }
-      }],
+      exclude: /node_modules/
     }]
   },
   plugins: [new HtmlWebpackPlugin({

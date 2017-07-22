@@ -1,7 +1,7 @@
 import 'github-markdown-css/github-markdown.css';
 import MarkdownIt from 'markdown-it';
-import './lib/highlight.pack';
-import './lib/highlight.css';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 import './index.less';
 
 (() => {
@@ -33,11 +33,28 @@ import './index.less';
     $body.removeEventListener('mousemove', handleMousemove);
   });
 
-  const md = new MarkdownIt();
+  const md = new MarkdownIt({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre class="hljs"><code>' +
+            hljs.highlight(lang, str, true).value +
+            '</code></pre>';
+        } catch (__) {
+        }
+      }
+
+      return ''; // use external default escaping
+    }
+  });
 
   $source.addEventListener('keyup', (e) => {
     e.preventDefault();
     $dest.innerHTML = md.render($source.value);
   });
 
+  // initial text
+  if ($source.value) {
+    $dest.innerHTML = md.render($source.value);
+  }
 })();
