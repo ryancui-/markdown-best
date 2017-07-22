@@ -10,12 +10,15 @@ import './index.less';
   const $grid = document.getElementsByClassName('grid-wrapper')[0];
   const $split = document.getElementsByClassName('grid-split')[0];
 
+  const $source = document.getElementById('source');
+  const $dest = document.getElementById('dest');
+
   // handle resize event
   var handleMousemove = (event) => {
     event.preventDefault();
 
     const leftSize = (event.screenX - 7.5) / document.body.clientWidth * 100;
-    const rightSize = 100 - leftSize;
+    const rightSize = 99 - leftSize;
 
     $grid.style.gridTemplateColumns = `${leftSize}% 15px ${rightSize}%`;
   };
@@ -28,6 +31,13 @@ import './index.less';
   $body.addEventListener('mouseup', (e) => {
     e.preventDefault();
     $body.removeEventListener('mousemove', handleMousemove);
+  });
+
+  const md = new MarkdownIt();
+
+  $source.addEventListener('keyup', (e) => {
+    e.preventDefault();
+    $dest.innerHTML = md.render($source.value);
   });
 
 })();
