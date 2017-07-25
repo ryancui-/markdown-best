@@ -10,10 +10,11 @@ class PrettyMarkdown {
     this.initVariables();
     this.initResizeEvent();
     this.initMarkdownParser();
+    this.initFileOpen();
 
     // parse anything originally there
     if (this.$source.value) {
-      this.$dest.innerHTML = this.md.render(this.$source.value);
+      this.parseMarkdown();
     }
   }
 
@@ -23,6 +24,8 @@ class PrettyMarkdown {
     this.$source = document.getElementById('source');
     this.$dest = document.getElementById('dest');
     this.$input = document.getElementsByClassName('grid-input')[0];
+
+    this.$file = document.getElementById('file');
 
     this.prevClick = null;
     this.prevScreenX = null;
@@ -89,8 +92,46 @@ class PrettyMarkdown {
 
     this.$source.addEventListener('keyup', e => {
       e.preventDefault();
-      this.$dest.innerHTML = this.md.render(this.$source.value);
+      this.parseMarkdown();
     });
+  }
+
+  initFileOpen() {
+    const ctrlKey = 17;
+    const cmdKey = 91;
+
+    document.addEventListener('keydown', e => {
+      if (e.keyCode === ctrlKey || e.keyCode === cmdKey) {
+        this.ctrl = true;
+      }
+
+      if (this.ctrl) {
+        if (e.keyCode === 79) {
+          e.preventDefault();
+          this.$file.click();
+        }
+      }
+    });
+
+    document.addEventListener('keyup', e => {
+      if (e.keyCode === ctrlKey || e.keyCode === cmdKey) {
+        this.ctrl = false;
+      }
+    });
+
+    this.$file.addEventListener('change', e => {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        this.$source.value = reader.result;
+        this.parseMarkdown();
+      };
+      reader.readAsText(this.$file.files[0]);
+    });
+  }
+
+  parseMarkdown() {
+    this.$dest.innerHTML = this.md.render(this.$source.value);
   }
 }
 ;
