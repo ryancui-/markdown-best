@@ -40,11 +40,18 @@ class PrettyMarkdown {
       this.prevScreenX = e.screenX;
 
       if (this.prevClick && Date.now() - this.prevClick < 300) {
+
+        this.$input.classList.add('flex-basis-transition');
         if (this.$input.style.flexBasis === '0px') {
           this.$input.style.flexBasis = this.$body.clientWidth - 15 + 'px';
         } else {
           this.$input.style.flexBasis = '0px';
         }
+
+        // wait until the animation finish
+        setTimeout(() => {
+          this.$input.classList.remove('flex-basis-transition');
+        }, 800);
 
         this.prevClick = null;
       } else {
